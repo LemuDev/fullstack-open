@@ -42,10 +42,15 @@ app.get("/info", (req, res)=>{
 
 
 app.get("/api/persons", (req, res)=>{
-    return res.json(data)
+  return res.json(data)
 })
 
+app.get("/api/persons/:id", (req, res)=>{
+  const id = req.params.id
+  const query = data.filter(d => d.id == id)
 
+  return res.json(query)
+})
 
 
 
