@@ -93,6 +93,11 @@ app.delete("/api/persons/:id", (req, res)=>{
   return res.json({detail:`${existsPerson[0].name} - deleted successfully`})
 })
 
+app.post("/api/persons", (req, res)=>{
+  const body = req.body
+})
+
+
 
 
 
