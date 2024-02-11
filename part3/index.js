@@ -4,7 +4,7 @@ const app = express()
 
 const PORT = 3000
 
-const data = [
+let data = [
     { 
       "id": 1,
       "name": "Arto Hellas", 
@@ -62,9 +62,35 @@ app.get("/api/persons/:id", (req, res)=>{
   if(query.length == 0){
     return res.json(notFoundResponse)
   }
-  
+
 
   return res.json(query)
+})
+
+app.delete("/api/persons/:id", (req, res)=>{
+  const id = Number(req.params.id)
+
+  const notFoundResponse = {
+    detail: "not found 404"
+  }
+
+
+  if(typeof id != "number"){
+    res.status(404)
+    return res.json(notFoundResponse)
+  }
+
+  const existsPerson = data.filter(d => d.id == id)
+  if(existsPerson.length == 0){
+    res.status(404)
+    return res.json(notFoundResponse)
+  }
+
+  
+  const query = data.filter(d => d.id !== id)
+  data = query
+
+  return res.json({detail:`${existsPerson[0].name} - deleted successfully`})
 })
 
 
