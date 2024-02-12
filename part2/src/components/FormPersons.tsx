@@ -1,13 +1,16 @@
-import React, { useState } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
+import { getPersons } from "../services/getPerson"
 
 type dataForm = {
   name: string,
   number: string
 }
 
+type Props = {
+  setList:  Dispatch<SetStateAction<never[]>>
+}
 
-
-export function FormPersons() {
+export function FormPersons({setList}: Props) {
   const [values, setValues] = useState<dataForm>(
     {
       name: '',
@@ -26,11 +29,11 @@ export function FormPersons() {
     )
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>)=>{
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
     
-
-    console.log(values)
+    const persons = await getPersons()
+    setList(persons)
   }
 
   return (
