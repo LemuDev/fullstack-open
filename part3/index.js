@@ -42,10 +42,30 @@ app.get("/info", (req, res)=>{
 
 
 app.get("/api/persons", (req, res)=>{
-    return res.json(data)
+  return res.json(data)
 })
 
+app.get("/api/persons/:id", (req, res)=>{
+  const notFoundResponse = {
+    detail: "not found 404"
+  }
 
+  let id = Number(req.params.id)
+
+
+  if(typeof id != "number"){
+    return res.json(notFoundResponse)
+  }
+
+  const query = data.filter(d => d.id == id)
+
+  if(query.length == 0){
+    return res.json(notFoundResponse)
+  }
+  
+
+  return res.json(query)
+})
 
 
 
