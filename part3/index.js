@@ -1,10 +1,13 @@
 const express = require('express')
-var bodyParser = require('body-parser')
+const morgan = require('morgan')
+
+
 
 const app = express()
 
 const PORT = 3000
 app.use(express.json())
+app.use(morgan('dev'))
 
 
 let data = [
@@ -50,7 +53,7 @@ app.get("/api/persons", (req, res)=>{
 
 app.get("/api/persons/:id", (req, res)=>{
   const notFoundResponse = {
-    detail: "not found 404"
+    error: "not found 404"
   }
 
   let id = Number(req.params.id)
@@ -74,7 +77,7 @@ app.delete("/api/persons/:id", (req, res)=>{
   const id = Number(req.params.id)
 
   const notFoundResponse = {
-    detail: "not found 404"
+    error: "not found 404"
   }
 
 
@@ -91,7 +94,7 @@ app.delete("/api/persons/:id", (req, res)=>{
   const query = data.filter(d => d.id !== id)
   data = query
 
-  return res.json({detail:`${existsPerson[0].name} - deleted successfully`})
+  return res.json({error:`${existsPerson[0].name} - deleted successfully`})
 })
 
 app.post("/api/persons", (req, res)=>{
@@ -102,14 +105,24 @@ app.post("/api/persons", (req, res)=>{
 
   const randomId = Math.floor(Math.random() * 10000000)
 
+  if(name.length == 0 || number.length == 0){
+
+    return res.status(422).json({error: "all fields are required"})
+  }
+  
+  const existsPerson = data.filter(p => p.name == name)
+
+  if(existsPerson.length != 0 ){
+    return res.status(400).json({ error: 'name must be unique' })
+  }
+
   data.push({
     id: randomId,
     name, 
     number
   })
-  
-  return res.status(201).json({detail: "user created successfully"})
 
+  return res.status(201).json({message: "user created successfully"})
 
 })
 
