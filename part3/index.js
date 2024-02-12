@@ -1,8 +1,11 @@
 const express = require('express')
+var bodyParser = require('body-parser')
 
 const app = express()
 
 const PORT = 3000
+app.use(express.json())
+
 
 let data = [
     { 
@@ -54,13 +57,13 @@ app.get("/api/persons/:id", (req, res)=>{
 
 
   if(typeof id != "number"){
-    return res.json(notFoundResponse)
+    return res.status(404).json(notFoundResponse)
   }
 
   const query = data.filter(d => d.id == id)
 
   if(query.length == 0){
-    return res.json(notFoundResponse)
+    return res.status(404).json(notFoundResponse)
   }
 
 
@@ -76,14 +79,12 @@ app.delete("/api/persons/:id", (req, res)=>{
 
 
   if(typeof id != "number"){
-    res.status(404)
-    return res.json(notFoundResponse)
+    return res.status(404).json(notFoundResponse)
   }
 
   const existsPerson = data.filter(d => d.id == id)
   if(existsPerson.length == 0){
-    res.status(404)
-    return res.json(notFoundResponse)
+    return res.status(404).json(notFoundResponse)
   }
 
   
@@ -95,6 +96,21 @@ app.delete("/api/persons/:id", (req, res)=>{
 
 app.post("/api/persons", (req, res)=>{
   const body = req.body
+
+  const name = body.name
+  const number = body.number
+
+  const randomId = Math.floor(Math.random() * 10000000)
+
+  data.push({
+    id: randomId,
+    name, 
+    number
+  })
+  
+  return res.status(201).json({detail: "user created successfully"})
+
+
 })
 
 
