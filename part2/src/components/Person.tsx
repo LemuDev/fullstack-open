@@ -1,8 +1,4 @@
-type Persons = {
-  id: number,
-  name: string,
-  number: string
-}
+import { Persons } from "../types/Persons"
 
 type Props = {
   persons: Persons

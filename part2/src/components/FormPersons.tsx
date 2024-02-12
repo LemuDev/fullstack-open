@@ -1,22 +1,16 @@
 import React, { Dispatch, SetStateAction, useState } from "react"
 import { getPersons } from "../services/getPerson"
+import { dataForm } from "../types/dataForm"
+import { createPerson } from "../services/createPerson"
 
-type dataForm = {
-  name: string,
-  number: string
-}
 
 type Props = {
   setList:  Dispatch<SetStateAction<never[]>>
 }
 
 export function FormPersons({setList}: Props) {
-  const [values, setValues] = useState<dataForm>(
-    {
-      name: '',
-      number: ''
-    }
-  )
+  const [values, setValues] = useState<dataForm>({name: '', number: ''})
+  const [errors, setErrors] = useState<string>("")
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target)
@@ -32,8 +26,21 @@ export function FormPersons({setList}: Props) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault()
     
+    const create = await createPerson(values)
+    
+    if(create.error != undefined){
+      setErrors(create.error)
+      
+      return
+    }
+
+    
+
     const persons = await getPersons()
     setList(persons)
+
+    setErrors("")
+
   }
 
   return (
@@ -50,6 +57,13 @@ export function FormPersons({setList}: Props) {
             <input type="text" id="number"placeholder="Number..." className="form-control" value={values.number} onChange={handleChange} name="number"/>
         </div>
 
+        {
+          errors?
+            <div className="alert alert-danger p-1 px-2">
+              <b className="text-sm">{errors}</b>
+            </div>
+          :null  
+      }
         <input type="submit" className="btn btn-primary w-100"/>
     </form>
   )
