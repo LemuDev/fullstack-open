@@ -31,7 +31,7 @@ function App(){
 
         <div className="col-md-6">
           <div>
-            <ListPersons list={listOfPersons}/>
+            <ListPersons list={listOfPersons} setList={setListOfPersons}/>
           </div>
         </div>
     </div>

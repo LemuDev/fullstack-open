@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import Person from "./Person";
 
 type Persons = {
@@ -6,11 +7,12 @@ type Persons = {
   number: string
 }
 type Props = {
-  list: Persons[]
+  list: Persons[],
+  setList: Dispatch<SetStateAction<never[]>>
 }
 
 
-export function ListPersons({ list }: Props) {
+export function ListPersons({ list, setList }: Props) {
   
 
   return (
@@ -21,7 +23,7 @@ export function ListPersons({ list }: Props) {
         <div>
           {
             list.map( l => 
-              <Person persons={l} key={l.id}/>  
+              <Person persons={l} setPersons={setList} key={l.id}/>  
             )
           }
         </div>
