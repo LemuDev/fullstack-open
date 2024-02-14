@@ -65,23 +65,32 @@ app.delete("/api/persons/:id", (req, res)=>{
   return res.json({error:`${existsPerson[0].name} - deleted successfully`})
 })
 
-app.post("/api/persons", (req, res)=>{
+app.post("/api/persons", async(req, res)=>{
   const body = req.body
 
   const name = body.name
   const number = body.number
 
+
   if(!name || !number){
+
     return res.status(422).json({error: "all fields are required"})
   }
   
-  const person = new Person({
-    name: name, 
-    number: number
+  const existsPerson = await Person.findOne({name: name})
+  
+
+  if(existsPerson != null){
+    return res.json({
+      error: "This person already exists"
+    })
+  }
+
+  const createPerson = new Person({
+    name, 
+    number
   })
-
-  person.save().then(result => mongoose.connection.close())
-
+  createPerson.save()
   return res.status(201).json({message: "user created successfully"})
 
 })
