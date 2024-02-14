@@ -15,8 +15,9 @@ app.use(morgan('dev'))
 app.use(cors())
 
 
-app.get("/api/persons", (req, res)=>{
-  return res.json(data)
+app.get("/api/persons", async (req, res)=>{
+  const persons = await Person.find()
+  return res.json(persons)
 })
 
 app.get("/api/persons/:id", (req, res)=>{
@@ -81,7 +82,7 @@ app.post("/api/persons", async(req, res)=>{
   
 
   if(existsPerson != null){
-    return res.json({
+    return res.status(400).json({
       error: "This person already exists"
     })
   }
