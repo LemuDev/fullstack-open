@@ -43,28 +43,26 @@ app.get("/api/persons/:id", async (req, res)=>{
 
 })
 
-app.delete("/api/persons/:id", (req, res)=>{
-  const id = Number(req.params.id)
+app.delete("/api/persons/:id", async(req, res)=>{
+  const id = req.params.id
 
   const notFoundResponse = {
     error: "not found 404"
   }
 
-
-  if(typeof id != "number"){
+  if(!mongoose.isValidObjectId(id)){
     return res.status(404).json(notFoundResponse)
   }
-
-  const existsPerson = data.filter(d => d.id == id)
-  if(existsPerson.length == 0){
-    return res.status(404).json(notFoundResponse)
-  }
-
   
-  const query = data.filter(d => d.id !== id)
-  data = query
+  const person = await Person.findById(id);
+  
+  if(person === null){
+    return res.status(404).json(notFoundResponse)
+  }
 
-  return res.json({error:`${existsPerson[0].name} - deleted successfully`})
+  Person.findByIdAndDelete(id).exec()
+
+  return res.json({error: "deleted successfully"})
 })
 
 app.post("/api/persons", async(req, res)=>{
