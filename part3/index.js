@@ -20,26 +20,27 @@ app.get("/api/persons", async (req, res)=>{
   return res.json(persons)
 })
 
-app.get("/api/persons/:id", (req, res)=>{
+app.get("/api/persons/:id", async (req, res)=>{
   const notFoundResponse = {
     error: "not found 404"
   }
 
-  let id = Number(req.params.id)
+  let id = req.params.id
 
 
-  if(typeof id != "number"){
+  if(!mongoose.isValidObjectId(id)){
+    return res.status(404).json(notFoundResponse)
+  }
+  
+  const person = await Person.findById(id);
+  
+  if(person === null){
     return res.status(404).json(notFoundResponse)
   }
 
-  const query = data.filter(d => d.id == id)
-
-  if(query.length == 0){
-    return res.status(404).json(notFoundResponse)
-  }
+  return res.json(person)
 
 
-  return res.json(query)
 })
 
 app.delete("/api/persons/:id", (req, res)=>{
