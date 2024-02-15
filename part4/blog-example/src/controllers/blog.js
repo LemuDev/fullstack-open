@@ -95,4 +95,62 @@ router.delete("/:id", async (req, res)=>{
 })
 
 
+router.put("/:id", async(req, res)=>{
+    const id = req.params.id
+
+    const body = req.body
+    
+    const title = body.title
+    const author = body.author
+    const url = body.url
+    const likes = body.likes
+
+    let errors = {}
+
+
+    if(!title){
+        errors.title = "thi field is required"
+    }
+    if(!author){
+        errors.author = "thi field is required"
+    }
+    if(!url){
+        errors.url = "thi field is required"
+    }
+    if(!likes){
+        errors.likes = "thi field is required"
+    }
+    if(typeof likes != "number"){
+        errors.likes = "thid field must be a number"
+    }
+
+
+    if(Object.keys(errors).length > 0){
+        return res.status(422).json(errors)    
+    }
+    const blog = Blog.findById({id: id})
+
+    blog.title
+    
+    // await Character.updateOne(blog, { 
+    //     title: title,
+    //     author: author,
+    //     url: url,
+    //     likes: likes
+    //  });
+
+    // await Blog.updateOne({ id: id }, {
+    //     author: author,
+    //     likes: likes,
+    //     title: title,
+    //     url: url    
+    //   }
+    // ).exec()
+
+    return res.json({
+        message: "blog edited successfully"
+    })
+})
+
+
 module.exports = router
