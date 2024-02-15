@@ -1,4 +1,5 @@
 const router = require("express").Router()
+const { default: mongoose } = require("mongoose")
 const Blog = require("../models/blog")
 
 
@@ -49,6 +50,25 @@ router.get("/", async (req, res)=>{
     const blogs = await Blog.find()
 
     return res.json(blogs)
+})
+
+router.get("/:id", async (req, res)=>{
+    const id = req.params.id
+
+    if(!mongoose.isValidObjectId(id)){
+        return res.status(404).json({
+            error: "Error 404 Non found"
+        })
+    }
+
+    const blog = await Blog.findById(id)
+    if(blog == null){
+        return res.status(404).json({
+            error: "Error 404 Non found"
+        })
+    }
+
+    return res.json(blog)
 })
 
 
