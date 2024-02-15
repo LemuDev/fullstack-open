@@ -60,4 +60,25 @@ router.get("/:id", async (req, res)=>{
 })
 
 
+router.delete("/:id", async (req, res)=>{
+    const id = req.params.id
+    const notFoundResponse = { error: "Error 404 not Found" }
+
+    if(!mongoose.isValidObjectId(id) ){
+        return res.status(404).json(notFoundResponse)
+    }
+
+    const note = await Note.findById(id)
+    if(note == null){
+        return res.status(404).json(notFoundResponse)
+    }
+
+    Note.findByIdAndDelete(id).exec()
+
+    return res.json({
+        error: "Note deleted success fully"
+    })
+})
+
+
 module.exports = router
