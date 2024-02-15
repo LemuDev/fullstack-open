@@ -1,6 +1,7 @@
 const router = require("express").Router()
+const note = require("../models/note")
 const Note = require("../models/note")
-
+const mongoose = require("mongoose")
 
 
 
@@ -42,6 +43,21 @@ router.post("/", async (req, res)=>{
     })
 })
 
+router.get("/:id", async (req, res)=>{
+    const id = req.params.id
+    const notFoundResponse = { error: "Error 404 not Found" }
+
+    if(!mongoose.isValidObjectId(id) ){
+        return res.status(404).json(notFoundResponse)
+    }
+
+    const note = await Note.findById(id)
+    if(note == null){
+        return res.status(404).json(notFoundResponse)
+    }
+
+    return res.json(note)
+})
 
 
 module.exports = router
