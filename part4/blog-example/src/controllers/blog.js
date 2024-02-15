@@ -45,9 +45,10 @@ router.post("/", async (req, res)=>{
     return res.json({message: "Blog created successfully"})
 })
 
-router.get("/", (req, res)=>{
+router.get("/", async (req, res)=>{
+    const blogs = await Blog.find()
 
-    return res.json({})
+    return res.json(blogs)
 })
 
 
