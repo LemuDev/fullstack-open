@@ -72,4 +72,27 @@ router.get("/:id", async (req, res)=>{
 })
 
 
+router.delete("/:id", async (req, res)=>{
+    const id = req.params.id
+
+    if(!mongoose.isValidObjectId(id)){
+        return res.status(404).json({
+            error: "Error 404 Not found"
+        })
+    }
+
+    const blog = await Blog.findById(id)
+    if(blog == null){
+        return res.status(404).json({
+            error: "Error 404 Not found"
+        })
+    }
+
+
+    Blog.findByIdAndDelete(id).exec()
+
+    return res.json({ message: "Blog deleted successfully" })
+})
+
+
 module.exports = router
