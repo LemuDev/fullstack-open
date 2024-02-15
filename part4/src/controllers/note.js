@@ -37,8 +37,6 @@ router.post("/", async (req, res)=>{
 
     createNote.save()
 
-
-    
     return res.json({
         message: "Note created successfully"
     })
