@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 
 
 const app = express()
-const data = []
 
 const PORT = 3000
 
