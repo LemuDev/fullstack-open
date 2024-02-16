@@ -128,24 +128,11 @@ router.put("/:id", async(req, res)=>{
     if(Object.keys(errors).length > 0){
         return res.status(422).json(errors)    
     }
-    const blog = Blog.findById({id: id})
 
-    blog.title
-    
-    // await Character.updateOne(blog, { 
-    //     title: title,
-    //     author: author,
-    //     url: url,
-    //     likes: likes
-    //  });
+    const blog = await Blog.findOne({_id: id})
+    blog.title = title
+    blog.save()
 
-    // await Blog.updateOne({ id: id }, {
-    //     author: author,
-    //     likes: likes,
-    //     title: title,
-    //     url: url    
-    //   }
-    // ).exec()
 
     return res.json({
         message: "blog edited successfully"
