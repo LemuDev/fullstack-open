@@ -43,7 +43,7 @@ router.post("/", async (req, res)=>{
     })
     blog.save()
 
-    return res.json({message: "Blog created successfully"})
+    return res.status(201).json({message: "Blog created successfully"})
 })
 
 router.get("/", async (req, res)=>{
