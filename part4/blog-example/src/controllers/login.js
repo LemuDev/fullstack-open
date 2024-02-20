@@ -72,7 +72,41 @@ router.post("/register", async (req, res) => {
     )
 })
 
+router.post("/login", async (req, res)=>{
+    const { username, password} = req.body
 
+    if (!username || !password) {
+        return res.status(422).json({
+            error: "all fields are required"
+        })
+    }
+
+
+    const user_by_username = await User.findOne({ username: username })
+
+    if(user_by_username == null){
+        return res.status(400).json({
+            error: "The user or password are wrong"
+        })
+    }
+
+    const pwHash = user_by_username.password
+    const isValidPassword = bcrypt.compareSync(password, pwHash) 
+
+    if(!isValidPassword){
+        return res.status(400).json({
+            error: "The user or password are wrong"
+        })
+    }
+
+    const access_token = jwt.sign(
+        {username: username},
+        config.JWT_SECRET_KEY,
+        { expiresIn: '1800s' }
+    )
+    
+    return res.json({access_token: access_token})
+})
 
 
 module.exports = router
