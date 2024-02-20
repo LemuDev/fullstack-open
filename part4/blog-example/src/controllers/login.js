@@ -1,7 +1,8 @@
 const router = require("express").Router()
 const User = require("../models/user")
 const bcrypt = require("bcryptjs")
-
+const jwt = require("jsonwebtoken")
+const config = require("../utils/config")
 
 router.post("/register", async (req, res) => {
     const { username, password, name } = req.body
@@ -59,10 +60,15 @@ router.post("/register", async (req, res) => {
     }
 
 
-
+    
+    const access_token = jwt.sign(
+        {username: username},
+        config.JWT_SECRET_KEY,
+        { expiresIn: '1800s' }
+    )
     return res.json(
         {
-            "access_token":"exmale"
+            "access_token": access_token
         }
     )
 })
