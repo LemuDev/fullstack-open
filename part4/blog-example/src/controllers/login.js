@@ -5,26 +5,41 @@ const bcrypt = require("bcryptjs")
 
 router.post("/register", async (req, res) => {
     const { username, password, name } = req.body
-    
-    if (!(username && password && name)) {
-        return res.status(422).json({
-            error: "all fields are required"
-        })
+    const errors = {}
+
+
+
+    if (!username) {
+        errors.username = "username is required"
+    }else{
+        if(username.length < 4){
+            errors.username = "must be at least 3 characters"
+        }
+    }
+    if(!password){
+        errors.password = "password is required"
+    }else{     
+        if(password.length < 8){
+            errors.password = "password must be more 8 characters"
+        }
+    }
+    if(!name){
+        errors.name = "name is required"
     }
 
-    if(password.length < 8){
-        return res.json({
-            "error": "password must be more 8 characters"
-        })
-    }
 
-    const user_by_username = await User.findOne({username: username}) 
+
+    const user_by_username  = await User.findOne({username: username}) 
 
     if (user_by_username != null) {
-        return res.json({
-            "error": "the username already exists"
-        })
+        errors.password = "the username already exists"
     }
+
+
+    if(Object.keys(errors).length >= 1){
+        return res.status(422).json({errors: errors})
+    }
+
 
     try {
         var salt = bcrypt.genSaltSync(10)
