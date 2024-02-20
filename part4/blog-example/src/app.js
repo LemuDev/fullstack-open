@@ -1,8 +1,10 @@
 const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
+const jwt_required = require("./utils/middlewares/jwtRequired")
 
 const app = express()
+
 
 const config = require("./utils/config")
 
@@ -26,7 +28,7 @@ mongoose.connect(config.MONGO_URL)
 const blogRouter = require("./controllers/blog")
 const authRouter = require("./controllers/login")
 
-app.use("/api/blog", blogRouter)
+app.use("/api/blog", jwt_required, blogRouter)
 app.use("/api", authRouter)
 
 module.exports = app
