@@ -31,7 +31,7 @@ router.post("/register", async (req, res) => {
 
 
     const user_by_username  = await User.findOne({username: username}) 
-
+    console.log(user_by_username)
     if (user_by_username != null) {
         errors.password = "the username already exists"
     }
