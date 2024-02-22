@@ -9,11 +9,8 @@ function BlogList({setLogIn}) {
   useEffect(() => {
     getAll()
       .then((blogs) => setBlogs(blogs.data))
-      .catch((blogs) =>  setLogIn(blogs.response.status !== 401));
-  
-    
-      console.log(blogs)
-    }, []);
+      .catch((blogs) =>  setLogIn(blogs.response.status !== 401))
+    }, [])
 
   return (
     <div className="col-sm-6 col-md-7">
