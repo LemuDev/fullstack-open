@@ -11,7 +11,9 @@ function FormBlog() {
   };
 
   return (
-    <form className="col-sm-5">
+    <form className="col-sm-6 col-md-5 shadow-sm border p-4 rounded">
+      <h2 className="display-4 text-center mb-4">Create Blog</h2>
+      
       <div className="form-group my-1">
         <label htmlFor="username" id="username">
           Username

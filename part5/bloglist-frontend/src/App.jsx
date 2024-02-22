@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-
 import BlogList from "./components/BlogList";
-import FormBlog from "./components/formBlog";
+import FormBlog from "./components/FormBlog";
 import FormLogin from "./components/FormLogin";
 import { getJWT } from "./utils/jwt";
 
@@ -28,7 +27,7 @@ const App = () => {
             <button>Log Out</button>
           </nav>
 
-          <div className=" mx-auto row">
+          <div className="container mx-auto row">
             <FormBlog/>
             <BlogList setLogIn={setLogIn}/>
           </div>
