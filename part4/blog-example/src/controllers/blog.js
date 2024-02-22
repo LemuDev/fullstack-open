@@ -1,6 +1,7 @@
 const router = require("express").Router()
 const { default: mongoose } = require("mongoose")
 const Blog = require("../models/blog")
+const User = require("../models/user")
 
 
 router.post("/", async (req, res)=>{
@@ -10,6 +11,9 @@ router.post("/", async (req, res)=>{
     const author = body.author
     const url = body.url
     const likes = body.likes
+    const token = req.token
+
+    console.log(token)
 
     let errors = {}
 
@@ -34,12 +38,15 @@ router.post("/", async (req, res)=>{
     if(Object.keys(errors).length > 0){
         return res.status(422).json(errors)    
     }
-    
+
+    const user_by_username = await User.findOne({ username: token.username })
+
     const blog = new Blog({
         title: title,
         author: author,
         likes: likes,
-        url: url
+        url: url,
+        author: user_by_username
     })
     blog.save()
 
@@ -47,7 +54,7 @@ router.post("/", async (req, res)=>{
 })
 
 router.get("/", async (req, res)=>{
-    const blogs = await Blog.find()
+    const blogs = await Blog.find({}).populate('author')
 
     return res.json(blogs)
 })
@@ -74,20 +81,25 @@ router.get("/:id", async (req, res)=>{
 
 router.delete("/:id", async (req, res)=>{
     const id = req.params.id
-
+    const token = req.token
     if(!mongoose.isValidObjectId(id)){
         return res.status(404).json({
             error: "Error 404 Not found"
         })
     }
 
-    const blog = await Blog.findById(id)
+    const user_by_email = await User.findOne({username: token.username})
+    const blog = await Blog.findOne({id: id, author: user_by_email.id})
+    console.log(blog)
+
+
     if(blog == null){
         return res.status(404).json({
             error: "Error 404 Not found"
         })
     }
 
+    
 
     Blog.findByIdAndDelete(id).exec()
 
