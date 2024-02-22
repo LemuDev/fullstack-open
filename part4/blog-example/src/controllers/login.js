@@ -90,10 +90,7 @@ router.post("/login", async (req, res)=>{
         })
     }
 
-    const pwHash = user_by_username.password
-    const isValidPassword = bcrypt.compareSync(password, pwHash) 
-
-    if(!isValidPassword){
+    if(!bcrypt.compareSync(password, user_by_username.password) ){
         return res.status(400).json({
             error: "The user or password are wrong"
         })

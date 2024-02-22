@@ -81,15 +81,14 @@ router.get("/:id", async (req, res)=>{
 
 router.delete("/:id", async (req, res)=>{
     const id = req.params.id
-    const token = req.token
+    console.log(!mongoose.isValidObjectId(id))
     if(!mongoose.isValidObjectId(id)){
         return res.status(404).json({
             error: "Error 404 Not found"
         })
     }
 
-    const user_by_email = await User.findOne({username: token.username})
-    const blog = await Blog.findOne({id: id, author: user_by_email.id})
+    const blog = await Blog.findById(id)
     console.log(blog)
 
 
