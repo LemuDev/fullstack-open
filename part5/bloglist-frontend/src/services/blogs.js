@@ -23,3 +23,12 @@ export const deleteBlog = async (id)=>{
 
 }
 
+export const createBlog = async (data) => {
+  const token = getJWT()
+  data.likes = Number(data.likes)
+
+  const request = await axios.post(baseUrl,  data,{ headers: { Authorization: `Bearer ${token}` }})
+
+
+  return request
+}

@@ -3,8 +3,7 @@ import { getAll } from "../services/blogs";
 import BlogItem from "./BlogItem";
 
 
-function BlogList({setLogIn}) {
-  const [blogs, setBlogs] = useState([]);
+function BlogList({setLogIn, blogs, setBlogs}) {
 
   useEffect(() => {
     getAll()
@@ -13,11 +12,11 @@ function BlogList({setLogIn}) {
     }, [])
 
   return (
-    <div className="col-sm-6 col-md-7">
+    <div className="col-sm-6 col-md-7" style={{overflowX:"hidden"}}>
       <h2 className="display-4 text-center">Blogs</h2>
       {
           blogs.map((b) => (
-            <BlogItem key={b.id} blog={b} />
+            <BlogItem key={b.id} blog={b} setBlogs={setBlogs}/>
           ))
       }
     </div>
