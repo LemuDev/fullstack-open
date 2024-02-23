@@ -10,7 +10,7 @@ function FormBlog({setLogIn, setBlogs}) {
     likes: ""
   });
   
-
+  
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };

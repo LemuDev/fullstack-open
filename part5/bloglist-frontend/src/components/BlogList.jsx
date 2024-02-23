@@ -11,6 +11,10 @@ function BlogList({setLogIn, blogs, setBlogs}) {
       .catch((blogs) =>  setLogIn(blogs.response.status !== 401))
     }, [])
 
+
+
+
+
   return (
     <div className="col-sm-6 col-md-7" style={{overflowX:"hidden"}}>
       <h2 className="display-4 text-center">Blogs</h2>

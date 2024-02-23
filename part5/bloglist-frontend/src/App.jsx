@@ -6,9 +6,9 @@ import { getJWT } from "./utils/jwt";
 
 const App = () => {
   const [logIn, setLogIn] = useState(false);
-
   const [blogs, setBlogs] = useState([]);
-
+  const [valuesEdit, setValuesEdit] = useState({})
+  
   useEffect(() => {
     const token = getJWT()
     if(token !== null){
@@ -30,8 +30,8 @@ const App = () => {
           </nav>
 
           <div className="container mx-auto row">
-            <FormBlog setLogIn={setLogIn} setBlogs={setBlogs}/>
-            <BlogList setLogIn={setLogIn} setBlogs={setBlogs} blogs={blogs}/>
+            <FormBlog setLogIn={setLogIn} setBlogs={setBlogs} />
+            <BlogList setLogIn={setLogIn} setBlogs={setBlogs} blogs={blogs} />
           </div>
         </div>
     

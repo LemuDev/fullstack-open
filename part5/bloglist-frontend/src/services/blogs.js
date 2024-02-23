@@ -8,7 +8,7 @@ export const getAll = async () => {
   const request = await axios.get(baseUrl,  { headers: { Authorization: `Bearer ${token}` } })
   console.log(request)
   return request
-  
+
 }
 
 
@@ -31,4 +31,14 @@ export const createBlog = async (data) => {
 
 
   return request
+}
+
+export const editBlog = async (data) => {
+  const token = getJWT()
+
+  data.likes = Number(data.likes)
+
+  const request = await axios.post(baseUrl,  data,{ headers: { Authorization: `Bearer ${token}` }})
+
+	return request
 }
