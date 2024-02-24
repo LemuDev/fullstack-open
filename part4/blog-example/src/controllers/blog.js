@@ -6,12 +6,13 @@ const User = require("../models/user")
 
 router.post("/", async (req, res)=>{
     const body = req.body
-    
+    const token = req.token
+
     const title = body.title
     const author = body.author
     const url = body.url
     const likes = body.likes
-    const token = req.token
+
 
     console.log(token)
 
@@ -20,9 +21,6 @@ router.post("/", async (req, res)=>{
 
     if(!title){
         errors.title = "thi field is required"
-    }
-    if(!author){
-        errors.author = "thi field is required"
     }
     if(!url){
         errors.url = "thi field is required"
@@ -43,7 +41,6 @@ router.post("/", async (req, res)=>{
 
     const blog = new Blog({
         title: title,
-        author: author,
         likes: likes,
         url: url,
         author: user_by_username
