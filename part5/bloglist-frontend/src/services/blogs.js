@@ -33,12 +33,12 @@ export const createBlog = async (data) => {
   return request
 }
 
-export const editBlog = async (data) => {
+export const editBlog = async (id, data) => {
   const token = getJWT()
 
   data.likes = Number(data.likes)
 
-  const request = await axios.post(baseUrl,  data,{ headers: { Authorization: `Bearer ${token}` }})
+  const request = await axios.put(baseUrl+`/${id}`,  data,{ headers: { Authorization: `Bearer ${token}` }})
 
 	return request
 }
