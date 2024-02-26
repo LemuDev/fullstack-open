@@ -109,7 +109,6 @@ router.put("/:id", async(req, res)=>{
     const body = req.body
     
     const title = body.title
-    const author = body.author
     const url = body.url
     const likes = body.likes
 
@@ -117,19 +116,16 @@ router.put("/:id", async(req, res)=>{
 
 
     if(!title){
-        errors.title = "thi field is required"
-    }
-    if(!author){
-        errors.author = "thi field is required"
+        errors.title = "this field is required"
     }
     if(!url){
-        errors.url = "thi field is required"
+        errors.url = "this field is required"
     }
     if(!likes){
-        errors.likes = "thi field is required"
+        errors.likes = "this field is required"
     }
     if(typeof likes != "number"){
-        errors.likes = "thid field must be a number"
+        errors.likes = "this field must be a number"
     }
 
 
@@ -137,8 +133,12 @@ router.put("/:id", async(req, res)=>{
         return res.status(422).json(errors)    
     }
 
-    const blog = await Blog.findOne({_id: id})
+    const query = {_id: id}
+
+    const blog = await Blog.findOne(query)
     blog.title = title
+    blog.url = url
+    blog.likes = likes
     blog.save()
 
 

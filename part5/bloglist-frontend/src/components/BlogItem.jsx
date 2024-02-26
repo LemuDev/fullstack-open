@@ -19,10 +19,12 @@ function BlogItem({ blog, setBlogs }) {
   const handleEdit = async(e) => {
     e.preventDefault()
 
-    await editBlog(values)
+    await editBlog(blog.id, values)
 
     const data = await getAll()
     setBlogs(data.data)
+
+    setEditMode(false)
   }
 
 
