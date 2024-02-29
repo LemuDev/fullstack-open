@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { getAll } from "../services/blogs";
-import BlogItem from "./BlogItem";
+import {BlogItem} from "./BlogItem";
 
 
 function BlogList({setLogIn, blogs, setBlogs}) {
 
-  useEffect(() => {
-    getAll()
-      .then((blogs) => setBlogs(blogs.data))
-      .catch((blogs) =>  setLogIn(blogs.response.status !== 401))
-    }, [])
+  // useEffect(() => {
+  //   getAll()
+  //     .then((blogs) => setBlogs(blogs.data))
+  //     .catch((blogs) =>  setLogIn(blogs.response.status !== 401))
+  //   }, [])
 
 
 

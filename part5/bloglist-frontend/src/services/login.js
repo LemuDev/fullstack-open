@@ -7,3 +7,7 @@ export const Login = async (data) => {
   return request.data
 }
 
+export const logOut = (setLogIn)=>{
+  localStorage.removeItem("token")
+  setLogIn(false)
+}

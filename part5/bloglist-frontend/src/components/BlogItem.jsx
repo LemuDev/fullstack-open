@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { deleteBlog, getAll, editBlog } from "../services/blogs";
 
-function BlogItem({ blog, setBlogs }) {
+export function BlogItem({ blog, setBlogs }) {
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -49,7 +49,7 @@ function BlogItem({ blog, setBlogs }) {
       <div className="flex-grow-1">
         <h3 className="h6 d-block">author: {blog.author.name}</h3>
         {editMode ? (
-          <form>
+          <form id="form-edit">
             <div className="form-group d-flex my-1">
               <label htmlFor="">Title: </label>
               <input
@@ -101,8 +101,8 @@ function BlogItem({ blog, setBlogs }) {
         ) : (
           <div>
             <span className="d-block">Title: {blog.title}</span>
-            <span className="d-block">Title: {blog.url}</span>
-            <span className="d-block">Title: {blog.likes}</span>
+            <span className="d-block">Url: {blog.url}</span>
+            <span className="d-block">Likes: {blog.likes}</span>
           </div>
         )}
       </div>
@@ -111,6 +111,7 @@ function BlogItem({ blog, setBlogs }) {
           <button
             className="d-inline-block btn btn-warning mx-2"
             onClick={() => setEditMode(true)}
+            id="EditModeBtn"
           >
             Edit
           </button>
@@ -122,6 +123,7 @@ function BlogItem({ blog, setBlogs }) {
             <button
               className="d-inline-block btn btn-danger"
               onClick={(e) => Delete()}
+              id="deleteBtn"
             >
               Delete
             </button>
@@ -132,4 +134,3 @@ function BlogItem({ blog, setBlogs }) {
   );
 }
 
-export default BlogItem;
