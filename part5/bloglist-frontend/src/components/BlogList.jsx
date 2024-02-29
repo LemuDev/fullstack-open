@@ -5,11 +5,11 @@ import {BlogItem} from "./BlogItem";
 
 function BlogList({setLogIn, blogs, setBlogs}) {
 
-  // useEffect(() => {
-  //   getAll()
-  //     .then((blogs) => setBlogs(blogs.data))
-  //     .catch((blogs) =>  setLogIn(blogs.response.status !== 401))
-  //   }, [])
+  useEffect(() => {
+    getAll()
+      .then((blogs) => setBlogs(blogs.data))
+      .catch((blogs) =>  setLogIn(blogs.response.status !== 401))
+    }, [])
 
 
 
@@ -19,7 +19,7 @@ function BlogList({setLogIn, blogs, setBlogs}) {
     <div className="col-sm-6 col-md-7" style={{overflowX:"hidden"}}>
       <h2 className="display-4 text-center">Blogs</h2>
       {
-          blogs.map((b) => (
+          [...blogs].map((b) => (
             <BlogItem key={b.id} blog={b} setBlogs={setBlogs}/>
           ))
       }

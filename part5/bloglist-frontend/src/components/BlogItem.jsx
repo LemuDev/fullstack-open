@@ -1,16 +1,20 @@
-import React, { useState } from "react";
-import { deleteBlog, getAll, editBlog } from "../services/blogs";
+import React, { useEffect, useState } from "react";
+import { deleteBlog, getAll, editBlog, LikeBlog } from "../services/blogs";
 
 export function BlogItem({ blog, setBlogs }) {
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [editMode, setEditMode] = useState(false);
+
+
   const [values, setValues] = useState({        
     title: blog.title,
     url: blog.url,
     likes: blog.likes
     }
   );
+
+
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -36,6 +40,17 @@ export function BlogItem({ blog, setBlogs }) {
     const data = await getAll().finally(() => setLoading(false));
     setBlogs(data.data);
   };
+
+  const Like = async (id)=>{
+    await LikeBlog(id)
+    const data = await getAll().finally(()=> setLoading(false))
+    
+    const newData = [...data.data]
+
+    setBlogs(newData);
+
+    console.log(data)
+  }
 
   return (
     <div
@@ -102,7 +117,12 @@ export function BlogItem({ blog, setBlogs }) {
           <div>
             <span className="d-block">Title: {blog.title}</span>
             <span className="d-block">Url: {blog.url}</span>
-            <span className="d-block">Likes: {blog.likes}</span>
+            <span className="d-block">
+              Likes: {blog.likes}
+
+              <button className="btn btn-dark" onClick={()=> Like(blog.id)}>+like</button>
+            </span>
+
           </div>
         )}
       </div>
