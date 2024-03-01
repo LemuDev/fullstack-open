@@ -14,6 +14,13 @@ export function BlogItem({ blog, setBlogs }) {
     }
   );
 
+  useEffect(() => {
+    setValues({        
+      title: blog.title,
+      url: blog.url,
+      likes: blog.likes
+      })
+  }, [blog]);
 
 
   const handleChange = (e) => {
