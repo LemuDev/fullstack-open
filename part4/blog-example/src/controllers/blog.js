@@ -103,7 +103,7 @@ router.delete("/:id", async (req, res)=>{
 })
 
 
-router.put("/:id", async(req, res)=>{
+router.put("/:id", async(req, res) =>{
     const id = req.params.id
 
     const body = req.body
@@ -144,6 +144,29 @@ router.put("/:id", async(req, res)=>{
 
     return res.json({
         message: "blog edited successfully"
+    })
+})
+
+router.patch("/likes/:id", async (req, res)=>{
+    const id = req.params.id
+
+    const query = {_id: id}
+
+    const blog = await Blog.findOne(query)
+    
+    if(blog == null){
+        return res.status(404).json({
+            error: "Error 404 Not found"
+        })
+    }
+
+    const plusOne = Number(blog.likes) + 1
+    blog.likes = plusOne
+    blog.save()
+
+
+    return res.json({
+        message: "likes changed successfully"
     })
 })
 

@@ -3,6 +3,7 @@ import BlogList from "./components/BlogList";
 import FormBlog from "./components/FormBlog";
 import FormLogin from "./components/FormLogin";
 import { getJWT } from "./utils/jwt";
+import { logOut } from "./services/login"
 
 const App = () => {
   const [logIn, setLogIn] = useState(false);
@@ -26,7 +27,9 @@ const App = () => {
       ) : (
         <div>
           <nav className="bg-dark p-2">
-            <button>Log Out</button>
+            <div className="container">
+              <button className="btn btn-light" onClick={()=>logOut(setLogIn)}>Log Out</button>
+            </div>
           </nav>
 
           <div className="container mx-auto row">

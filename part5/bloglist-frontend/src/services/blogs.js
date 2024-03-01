@@ -42,3 +42,13 @@ export const editBlog = async (id, data) => {
 
 	return request
 }
+
+export const LikeBlog = async (id) => {
+  const token = getJWT()
+  const data = {}
+  const request = await axios.patch(baseUrl+`/likes/${id}`, data, { headers: { Authorization: `Bearer ${token}` } })
+
+  console.log("TOKEN:", token)
+
+	return request
+}

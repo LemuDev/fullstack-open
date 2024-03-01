@@ -1,16 +1,20 @@
-import React, { useState } from "react";
-import { deleteBlog, getAll, editBlog } from "../services/blogs";
+import React, { useEffect, useState } from "react";
+import { deleteBlog, getAll, editBlog, LikeBlog } from "../services/blogs";
 
-function BlogItem({ blog, setBlogs }) {
+export function BlogItem({ blog, setBlogs }) {
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [editMode, setEditMode] = useState(false);
+
+
   const [values, setValues] = useState({        
     title: blog.title,
     url: blog.url,
     likes: blog.likes
     }
   );
+
+
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -37,6 +41,17 @@ function BlogItem({ blog, setBlogs }) {
     setBlogs(data.data);
   };
 
+  const Like = async (id)=>{
+    await LikeBlog(id)
+    const data = await getAll().finally(()=> setLoading(false))
+    
+    const newData = [...data.data]
+
+    setBlogs(newData);
+
+    console.log(data)
+  }
+
   return (
     <div
       className="alert alert-secondary d-flex justify-content-between align-items-center"
@@ -49,7 +64,7 @@ function BlogItem({ blog, setBlogs }) {
       <div className="flex-grow-1">
         <h3 className="h6 d-block">author: {blog.author.name}</h3>
         {editMode ? (
-          <form>
+          <form id="form-edit">
             <div className="form-group d-flex my-1">
               <label htmlFor="">Title: </label>
               <input
@@ -101,8 +116,13 @@ function BlogItem({ blog, setBlogs }) {
         ) : (
           <div>
             <span className="d-block">Title: {blog.title}</span>
-            <span className="d-block">Title: {blog.url}</span>
-            <span className="d-block">Title: {blog.likes}</span>
+            <span className="d-block">Url: {blog.url}</span>
+            <span className="d-block">
+              Likes: {blog.likes}
+
+              <button className="btn btn-dark" onClick={()=> Like(blog.id)}>+like</button>
+            </span>
+
           </div>
         )}
       </div>
@@ -111,6 +131,7 @@ function BlogItem({ blog, setBlogs }) {
           <button
             className="d-inline-block btn btn-warning mx-2"
             onClick={() => setEditMode(true)}
+            id="EditModeBtn"
           >
             Edit
           </button>
@@ -122,6 +143,7 @@ function BlogItem({ blog, setBlogs }) {
             <button
               className="d-inline-block btn btn-danger"
               onClick={(e) => Delete()}
+              id="deleteBtn"
             >
               Delete
             </button>
@@ -132,4 +154,3 @@ function BlogItem({ blog, setBlogs }) {
   );
 }
 
-export default BlogItem;

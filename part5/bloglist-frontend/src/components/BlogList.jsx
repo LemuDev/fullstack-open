@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getAll } from "../services/blogs";
-import BlogItem from "./BlogItem";
+import {BlogItem} from "./BlogItem";
 
 
 function BlogList({setLogIn, blogs, setBlogs}) {
@@ -19,7 +19,7 @@ function BlogList({setLogIn, blogs, setBlogs}) {
     <div className="col-sm-6 col-md-7" style={{overflowX:"hidden"}}>
       <h2 className="display-4 text-center">Blogs</h2>
       {
-          blogs.map((b) => (
+          [...blogs].map((b) => (
             <BlogItem key={b.id} blog={b} setBlogs={setBlogs}/>
           ))
       }
