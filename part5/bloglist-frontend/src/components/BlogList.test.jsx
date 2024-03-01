@@ -1,5 +1,5 @@
 import { render, screen, fireEvent} from '@testing-library/react'
-import { describe, expect, it, test} from 'vitest'
+import { assert, describe, expect, it, test} from 'vitest'
 
 import BlogList from "./BlogList"
 
@@ -52,5 +52,20 @@ describe('Blog List', () => {
 
         expect(formEdit[0]).toBeDefined();
     })  
+
+    it("Like BTN", () => {
+        const { container } = render(<BlogList blogs={mock} setBlogs={(e)=> console.log(e) } setLogIn={(e)=>console.log(e)}/>)
+        
+        const btnDelete = container.querySelector("#btn-like")
+        let dataLikes = container.querySelector("#data-likes").textContent
+        dataLikes = Number(dataLikes)
+        fireEvent.click(btnDelete)
+
+        let afterClickDate = container.querySelector("#data-likes").textContent
+        afterClickDate = Number(afterClickDate)
+        expect.soft(dataLikes + 1).toEqual(afterClickDate)
+
+
+    })
 
 })

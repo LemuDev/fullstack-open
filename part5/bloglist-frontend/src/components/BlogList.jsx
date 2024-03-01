@@ -5,11 +5,11 @@ import {BlogItem} from "./BlogItem";
 
 function BlogList({setLogIn, blogs, setBlogs}) {
 
-  useEffect(() => {
-    getAll()
-      .then((blogs) => setBlogs(blogs.data))
-      .catch((blogs) =>  setLogIn(blogs.response.status !== 401))
-    }, [])
+  // useEffect(() => {
+  //   getAll()
+  //     .then((blogs) => setBlogs(blogs.data))
+  //     .catch((blogs) =>  setLogIn(blogs.response.status !== 401))
+  //   }, [])
 
 
 

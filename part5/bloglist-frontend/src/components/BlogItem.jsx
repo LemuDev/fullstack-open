@@ -124,11 +124,11 @@ export function BlogItem({ blog, setBlogs }) {
           <div>
             <span className="d-block">Title: {blog.title}</span>
             <span className="d-block">Url: {blog.url}</span>
-            <span className="d-block">
-              Likes: {blog.likes}
+            <div className="d-block">
+              <span id="data-likes">Likes: {blog.likes}</span>
 
-              <button className="btn btn-dark" onClick={()=> Like(blog.id)}>+like</button>
-            </span>
+              <button className="btn btn-dark" onClick={()=> Like(blog.id)} id="btn-like">+like</button>
+            </div>
 
           </div>
         )}
