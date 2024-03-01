@@ -36,7 +36,7 @@ function FormLogin({setLogIn}) {
       className="container shadow-sm border p-4 rounded"
       style={{ maxWidth: "500px" }}
       onSubmit={handleSubmit}
-      method="POST"
+      method="POST" id="form-login"
     >
       <h2 className="display-4 text-center mb-4">Log In</h2>
 
