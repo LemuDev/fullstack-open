@@ -33,7 +33,7 @@ function FormBlog({setLogIn, setBlogs}) {
   return (
     <form className="col-sm-6 col-md-5 shadow-sm border p-4 rounded"
       onSubmit={handleSubmit}
-      method="POST"
+      method="POST" id="Form-Blog"
     >
       <h2 className="display-4 text-center mb-4">Create Blog</h2>
       
