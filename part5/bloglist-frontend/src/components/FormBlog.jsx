@@ -48,6 +48,7 @@ function FormBlog({setLogIn, setBlogs}) {
           className="form-control"
           onChange={handleChange}
           required
+
         />
       </div>
 
@@ -61,25 +62,12 @@ function FormBlog({setLogIn, setBlogs}) {
           value={values.url}
           className="form-control"
           onChange={handleChange}
-          required
+
         />
       </div>
       
-      <div className="form-group my-1">
-        <label htmlFor="likes" id="likes">
-          Likes
-        </label>
-        <input
-          type="number"
-          name="likes" id="likes"
-          value={values.likes}
-          className="form-control"
-          onChange={handleChange}
-          required
-        />
-      </div>
 
-      <input type="submit" className="btn btn-primary btn-block w-100 mt-2" />
+      <button type="submit" className="btn btn-primary btn-block w-100 mt-2" id="btn-create-blog">Create Blog</button>
     </form>
   );
 }

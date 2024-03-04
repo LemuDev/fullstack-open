@@ -9,9 +9,7 @@ router.post("/", async (req, res)=>{
     const token = req.token
 
     const title = body.title
-    const author = body.author
     const url = body.url
-    const likes = body.likes
 
 
     console.log(token)
@@ -25,12 +23,6 @@ router.post("/", async (req, res)=>{
     if(!url){
         errors.url = "thi field is required"
     }
-    if(!likes){
-        errors.likes = "thi field is required"
-    }
-    if(typeof likes != "number"){
-        errors.likes = "thid field must be a number"
-    }
 
 
     if(Object.keys(errors).length > 0){
@@ -41,7 +33,7 @@ router.post("/", async (req, res)=>{
 
     const blog = new Blog({
         title: title,
-        likes: likes,
+        likes: 0,
         url: url,
         author: user_by_username
     })
@@ -77,6 +69,7 @@ router.get("/:id", async (req, res)=>{
 
 
 router.delete("/:id", async (req, res)=>{
+    const token = req.token
     const id = req.params.id
     console.log(!mongoose.isValidObjectId(id))
     if(!mongoose.isValidObjectId(id)){
@@ -95,7 +88,17 @@ router.delete("/:id", async (req, res)=>{
         })
     }
 
+    console.log(blog.author)
     
+    console.log(token)
+    const user_by_username = await User.find({username: token.username})
+    if(!user_by_username !== null){
+        return res.json(
+            {
+                "error": "you can't deleted this blog"
+            }
+        )
+    }
 
     Blog.findByIdAndDelete(id).exec()
 

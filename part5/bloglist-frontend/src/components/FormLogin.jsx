@@ -70,11 +70,11 @@ function FormLogin({setLogIn}) {
       {
         error&&
         <div>
-          <span className="d-block text-danger text-sm">{error}</span>
+          <span className="d-block text-danger text-sm" id="error-message">{error}</span>
         </div>
     
       }
-      <input type="submit" className="btn btn-primary w-100 mt-1" />
+      <input type="submit" className="btn btn-primary w-100 mt-1" id="btn-login"/>
     </form>
   );
 }
